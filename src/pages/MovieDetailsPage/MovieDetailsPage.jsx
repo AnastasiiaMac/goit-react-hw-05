@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieDetails } from "../../films-api";
 import css from "./MovieDetailsPage.module.css";
+import { NavLink } from "react-router-dom";
 
-const MovieDetailsPage = () => {
-  const { id } = useParams();
+const MovieDetailsPage = ({ id }) => {
+  const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   useEffect(() => {
     const getMovieDetails = async () => {
-      const movieDetails = await fetchMovieDetails(id);
+      const movieDetails = await fetchMovieDetails(movieId);
       setMovie(movieDetails);
     };
 
     getMovieDetails();
-  }, [id]);
+  }, [movieId]);
 
   if (!movie) return <div>Loading...</div>;
   return (
@@ -40,6 +41,8 @@ const MovieDetailsPage = () => {
             <li key={genre.id}>{genre.name}</li>
           ))}
         </ul>
+        <NavLink to={`/movies/${movieId}/cast`}>Cast</NavLink>
+        {/* <NavLink to={`/movies/${movieId}/reviews`}>Reviews</NavLink> */}
       </div>
     </div>
   );
