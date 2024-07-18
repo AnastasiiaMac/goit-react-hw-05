@@ -25,12 +25,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage data={trendingMovies} />} />
         <Route path="/movies" element={<div>Movies Page</div>} />
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
-        <Route path="/movies/:movieId/cast" element={<MovieCast />} />
-        <Route
-          path="/movies/:movieId/reviews"
-          element={<MovieReviews />}
-        ></Route>
+        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+          <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" element={<MovieReviews />}></Route>
+        </Route>
       </Routes>
     </div>
   );

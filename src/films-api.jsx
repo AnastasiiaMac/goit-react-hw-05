@@ -36,4 +36,21 @@ const fetchMovieCredits = async (id) => {
   }
 };
 
-export { fetchTrendingMovies, fetchMovieDetails, fetchMovieCredits };
+const fetchMovieReviews = async (id) => {
+  const url = `https://api.themoviedb.org/3/movie/${id}/reviews`;
+  try {
+    const response = await axios.get(url);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching movie reviews", error);
+    return null;
+  }
+};
+
+export {
+  fetchTrendingMovies,
+  fetchMovieDetails,
+  fetchMovieCredits,
+  fetchMovieReviews,
+};
