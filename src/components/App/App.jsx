@@ -13,26 +13,10 @@ const MovieCast = lazy(() => import("../MovieCast/MovieCast"));
 const MovieReviews = lazy(() => import("../MovieReviews/MovieReviews"));
 
 function App() {
-  const [trendingMovies, setTrendingMovies] = useState([]);
   const [movies, setMovies] = useState([]);
   const [searchTopic, setSearchTopic] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const getTrendingMovies = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchTrendingMovies();
-        setTrendingMovies(data);
-      } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getTrendingMovies();
-  }, []);
 
   const handleSearch = async (searchQuery) => {
     setMovies([]);
@@ -63,7 +47,7 @@ function App() {
       <Navigation />
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<HomePage data={trendingMovies} />} />
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/movies"
             element={
