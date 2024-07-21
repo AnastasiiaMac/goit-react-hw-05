@@ -4,10 +4,13 @@ import { fetchMovieDetails } from "../../films-api";
 import css from "./MovieDetailsPage.module.css";
 import { NavLink, Outlet } from "react-router-dom";
 import ImgNotFound from "../../assets/image-not-found.jpg";
+import PreviousPage from "../../components/PreviousPage/PreviousPage";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
+
   const [movie, setMovie] = useState(null);
+
   useEffect(() => {
     const getMovieDetails = async () => {
       const movieDetails = await fetchMovieDetails(movieId);
@@ -18,8 +21,10 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   if (!movie) return <div>Loading...</div>;
+
   return (
     <div>
+      <PreviousPage />
       <div className={css.container}>
         <img
           src={

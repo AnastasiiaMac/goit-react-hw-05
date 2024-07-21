@@ -1,0 +1,32 @@
+.container {
+  background-color: rgb(66, 66, 167);
+  max-width: 1400px;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.form {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 40px;
+  background-color: #fcfcfc;
+  width: 500px;
+}
+.input {
+  flex-grow: 2;
+  border: none;
+  outline: none;
+  font-size: 5px;
+  font-size: 20px;
+}
+.button {
+  border: none;
+  background-color: #fcfcfc;
+  color: black;
+  cursor: pointer;
+  border-radius: 0;
+  font-size: 20px;
+}

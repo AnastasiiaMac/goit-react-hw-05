@@ -2,11 +2,15 @@ import { Route, Routes } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import { fetchMovieBySearchQuery, fetchTrendingMovies } from "../../films-api";
 import HomePage from "../../pages/HomePage/HomePage";
-import { useCallback, useEffect, useState } from "react";
-import MovieDetailsPage from "../../pages/MovieDetailsPage/MovieDetailsPage";
-import MovieCast from "../MovieCast/MovieCast";
-import MovieReviews from "../MovieReviews/MovieReviews";
-import MoviesPage from "../../pages/MoviesPage/MoviesPage";
+import { useEffect, useState, Suspense, lazy } from "react";
+import Loader from "../Loader/Loader";
+
+const MoviesPage = lazy(() => import("../../pages/MoviesPage/MoviesPage"));
+const MovieDetailsPage = lazy(() =>
+  import("../../pages/MovieDetailsPage/MovieDetailsPage")
+);
+const MovieCast = lazy(() => import("../MovieCast/MovieCast"));
+const MovieReviews = lazy(() => import("../MovieReviews/MovieReviews"));
 
 function App() {
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -35,11 +39,6 @@ function App() {
     setSearchTopic(searchQuery);
   };
 
-  const clearSearchResults = useCallback(() => {
-    setMovies([]);
-    setSearchTopic("");
-  }, []);
-
   useEffect(() => {
     if (searchTopic === "") {
       return;
@@ -62,25 +61,26 @@ function App() {
   return (
     <div>
       <Navigation />
-      <Routes>
-        <Route path="/" element={<HomePage data={trendingMovies} />} />
-        <Route
-          path="/movies"
-          element={
-            <MoviesPage
-              onSearch={handleSearch}
-              searchResults={movies}
-              clearSearchResults={clearSearchResults}
-              loading={loading}
-              error={error}
-            />
-          }
-        />
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-          <Route path="cast" element={<MovieCast />} />
-          <Route path="reviews" element={<MovieReviews />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<HomePage data={trendingMovies} />} />
+          <Route
+            path="/movies"
+            element={
+              <MoviesPage
+                onSearch={handleSearch}
+                searchResults={movies}
+                loading={loading}
+                error={error}
+              />
+            }
+          />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </div>
   );
 }
