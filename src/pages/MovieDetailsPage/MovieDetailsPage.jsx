@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchMovieDetails } from "../../films-api";
 import css from "./MovieDetailsPage.module.css";
 import { NavLink, Outlet } from "react-router-dom";
+import ImgNotFound from "../../assets/image-not-found.jpg";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -24,7 +25,7 @@ const MovieDetailsPage = () => {
           src={
             movie.poster_path
               ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-              : alert("Image not found")
+              : ImgNotFound
           }
           alt={movie.original_title}
           width="350"
@@ -44,7 +45,8 @@ const MovieDetailsPage = () => {
           </ul>
         </div>
       </div>
-      <ul>
+      <h3 className={css.addInfoHeading}>Additional information</h3>
+      <ul className={css.informationList}>
         <li>
           <NavLink to="cast">Cast</NavLink>
         </li>

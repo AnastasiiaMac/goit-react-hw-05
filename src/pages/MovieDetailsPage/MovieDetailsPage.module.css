@@ -10,3 +10,11 @@
   display: flex;
   gap: 10px;
 }
+.informationList {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 20px;
+}
+.addInfoHeading {
+  margin-top: 15px;
+}

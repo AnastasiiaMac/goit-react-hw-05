@@ -48,9 +48,26 @@ const fetchMovieReviews = async (id) => {
   }
 };
 
+const fetchMovieBySearchQuery = async (searchQuery) => {
+  const url = "https://api.themoviedb.org/3/search/movie";
+  try {
+    const response = await axios.get(url, {
+      params: {
+        query: searchQuery,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching movie by search query", error);
+    return null;
+  }
+};
+
 export {
   fetchTrendingMovies,
   fetchMovieDetails,
   fetchMovieCredits,
   fetchMovieReviews,
+  fetchMovieBySearchQuery,
 };
